@@ -9,6 +9,18 @@ class Bot:
         self.sub_bots = []
 
     def add_sub_bot(self, bot):
+        # Check that no child nodes can loop back to their parents
+        def contains(current, target):
+            if current == target:
+                return True
+            for sub in current.sub_bots:
+                if contains(sub, target):
+                    return True
+            return False
+
+        if contains(bot, self):
+            print(f"Error: Cannot add {bot.bot_id} as a sub-bot to {self.bot_id}.")
+            return
         self.sub_bots.append(bot)
 
     def receive_command(self, command):
@@ -27,5 +39,7 @@ layer1_a.add_sub_bot(layer2_1)
 layer1_b.add_sub_bot(layer2_2)
 root.add_sub_bot(layer1_a)
 root.add_sub_bot(layer1_b)
+
+layer2_1.add_sub_bot(layer1_a) # should output error message (cannot create a cycle in tree)
 
 root.receive_command("scan_network")

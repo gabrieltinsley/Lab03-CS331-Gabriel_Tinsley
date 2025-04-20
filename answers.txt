@@ -1,8 +1,33 @@
 1. What happens if the C&C server in the centralized model is removed?
 
+After observing the botnet_centralized.py and adding a lot more bots, I found that removing the C&C server in the centralized model made the program crash. 
+The C&C server is the only thing in charge of telling the N bots what to do.
+
 2. How does command propagation differ in hierarchical vs. P2P?
+
+In hierarchical command propagation is in a tree structure. With the root node at the top, then the subsequent levels having less and less authority. 
+The root recieves and gives commands to the level below it, which gives commands to the level below it, all the way down the tree. The drawing in 
+heirarchical_diagram.jpg shows the command propagation for hierarchical.
+
+In P2P command propagation is in a circular structure. The message is sent to one bot in the circle, and then following the circle in the order the bots 
+are connected, each bot is given the command sequentially. The drawing in P2P_diagram.jpg shows the command propagation of P2P.
 
 3. Which model is most resilient to node failure? Why?
 
+A centralized botnet is most resilient to node failure because all bots communicate directly with the centralized server. For P2P the bots communicate with 
+each other by connecting to neighboring bots through nodes. In hierarchical model, the bots communicate with each other by creating nodes with different ranks. 
+For example, there is a bot in the root node with the most authority that tells the bots below it in other nodes what to do. Since P2P and hierarchical both 
+deal with bots in nodes and centralized botnet does not, that is why centralized botnets are the most resilient to node failure.
+
 4. What defense mechanisms can detect and disrupt each model?
 
+For the centralized botnet, the attack run by the bots is a distributed denial of service (ddos) attack. The first defense mechanisms would be to detect the
+attack through scanning the system. The next defense mechanisms would be to do a behavioral analysis to see exactly how your system is being attacked, flag 
+anything that looks suspicious. The goal would be to pinpoint the C&C server to shut down the person who is in control of the bots.
+
+In the hierarchical botnet there is an attack run by bots that scans the network. A defense mechanism against this would be sandboxing the malicious code that the 
+bots are in. By restricting the rights of the code, you will be able to find bots scanning your system. Running the malicious code in a virtual machine is a safe 
+practice that is a great first step at stopping these bots.
+
+Finally, for the P2P botnet that attack is trying to inject malicious code through an update. Similar to before, a great defense mechanism is a sandbox. By restricting 
+the rights of the code, the update would be easily spotted and the code would be flagged. In conclusion, sandboxing is a safe first step to do with unknown code.

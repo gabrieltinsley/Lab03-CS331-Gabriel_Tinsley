@@ -23,8 +23,8 @@ class CommandServer:
             bot.receive_command(command)
 
 # Simulate
-server = CommandServer()
-for i in range(5):
+server = CommandServer() # saw what happens when C&C server is removed
+for i in range(100): # added a lot more bots
     server.register_bot(Bot(i))
 
 server.send_command("launch_ddos")

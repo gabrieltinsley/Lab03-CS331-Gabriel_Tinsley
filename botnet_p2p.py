@@ -22,11 +22,12 @@ class Bot:
             neighbor.receive_command(command, visited)
 
 # Create mesh
-bots = [Bot(i) for i in range(5)]
+bots = [Bot(i) for i in range(6)]
 bots[0].connect(bots[1])
-bots[1].connect(bots[2])
+bots[1].connect(bots[0])  # mess up ordering, only bot 0 and 1 should recieve commands
 bots[2].connect(bots[3])
 bots[3].connect(bots[4])
-bots[4].connect(bots[0])  # cycle
+bots[4].connect(bots[5])  
+bots[5].connect(bots[4])  # not part of cycle, should not recieve commands
 
 bots[0].receive_command("update_config")

@@ -1,0 +1,8 @@
+1. What happens if the C&C server in the centralized model is removed?
+
+2. How does command propagation differ in hierarchical vs. P2P?
+
+3. Which model is most resilient to node failure? Why?
+
+4. What defense mechanisms can detect and disrupt each model?
+
